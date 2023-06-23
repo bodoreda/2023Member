@@ -4,6 +4,26 @@
 
 <mapper namespace="msa.member.v1.member.dao.MemberDao">
     <select id="login" parameterType="msa.member.v1.member.dto.MemberGetDto" resultType="msa.member.v1.member.model.Member">
-        SELECT *, COUNT(*) FROM mem_bsc WHERE LOGIN_ID = #{loginId} AND ENC_PW = #{encPw}
+        SELECT * FROM mem_bsc WHERE LOGIN_ID = #{loginId} AND ENC_PW = #{encPw}
     </select>
+
+    <insert id="signUp" parameterType="msa.member.v1.member.dto.MemberInDto">
+        INSERT INTO mem_bsc (
+            LOGIN_ID,
+            ENC_PW,
+            USER_NAME,
+            PHONE,
+            EMAIL,
+            ADDR,
+            ADDR_DTL
+        ) VALUES (
+            #{loginId},
+            #{encPw},
+            #{userName},
+            #{phone},
+            #{email},
+            #{addr},
+            #{addrDtl}
+        )
+    </insert>
 </mapper>

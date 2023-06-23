@@ -3,6 +3,7 @@ package msa.member.v1.member.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import msa.member.v1.member.dto.MemberGetDto;
+import msa.member.v1.member.dto.MemberInDto;
 import msa.member.v1.member.model.Member;
 import msa.member.v1.member.service.MemberService;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,15 @@ public class MemberApi {
         getDto.setMember(member);
         log.traceExit(getDto);
         return ResponseEntity.status(returnStatus).body(getDto);
+    }
+
+    @PostMapping("/signUp")
+    public ResponseEntity signUp(@RequestBody MemberInDto inDto) {
+        log.traceEntry("{]", inDto);
+        HttpStatus returnStatus = HttpStatus.OK;
+        int resultCount = memberService.signUp(inDto);
+        log.traceExit(resultCount);
+        return ResponseEntity.status(returnStatus).body(resultCount);
     }
 
 }
