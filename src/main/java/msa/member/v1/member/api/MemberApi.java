@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import msa.member.v1.member.dto.MemberGetDto;
 import msa.member.v1.member.dto.MemberInDto;
+import msa.member.v1.member.dto.MemberOutDto;
 import msa.member.v1.member.model.Member;
+import msa.member.v1.member.model.UserInfo;
 import msa.member.v1.member.service.MemberService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +25,14 @@ public class MemberApi {
     public ResponseEntity login(@RequestBody MemberGetDto getDto) {
         log.traceEntry("{}", getDto);
         HttpStatus returnStatus = HttpStatus.OK;
-        Member member = memberService.login(getDto);
-        getDto.setMember(member);
-        log.traceExit(getDto);
-        return ResponseEntity.status(returnStatus).body(getDto);
+
+        MemberOutDto outDto = memberService.login(getDto);
+        log.traceExit(outDto);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + outDto.getAccessToken());
+
+        return ResponseEntity.status(returnStatus).headers(headers).body(outDto.getUserInfo());
     }
 
     @PostMapping("/signUp")

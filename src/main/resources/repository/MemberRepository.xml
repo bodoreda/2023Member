@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="msa.member.v1.member.dao.MemberDao">
-    <select id="login" parameterType="msa.member.v1.member.dto.MemberGetDto" resultType="msa.member.v1.member.model.Member">
+    <select id="login" parameterType="msa.member.v1.member.dto.MemberGetDto" resultType="msa.member.v1.member.model.UserInfo">
         SELECT * FROM mem_bsc WHERE LOGIN_ID = #{loginId} AND ENC_PW = #{encPw}
     </select>
 
@@ -17,13 +17,13 @@
             ADDR,
             ADDR_DTL
         ) VALUES (
-            #{loginId},
+            #{login_id},
             #{encPw},
-            #{userName},
+            #{user_name},
             #{phone},
             #{email},
             #{addr},
-            #{addrDtl}
+            #{addr_dtl}
         )
     </insert>
 </mapper>

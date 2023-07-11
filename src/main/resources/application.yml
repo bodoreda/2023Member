@@ -9,6 +9,14 @@ spring:
     url: jdbc:mariadb://localhost:3306/member
     username: root
     password: 1234
+  redis:
+    host: host.docker.internal    # redis 컨테이너의 ip(172.17.0.1)를 설정하면 timeOut이 뜸.. 원인?
+    port: 6379
+  jwt:
+    secret: thekeysizemustbegreaterthanorequalto256bits
+    token:
+      accessExpTime: 300000   # 5분
+      refreshExpTime: 3600000 # 60분
 
 mybatis:
   mapper-locations: repository/*.xml
