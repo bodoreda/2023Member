@@ -5,8 +5,6 @@ import lombok.extern.log4j.Log4j2;
 import msa.member.v1.member.dto.MemberGetDto;
 import msa.member.v1.member.dto.MemberInDto;
 import msa.member.v1.member.dto.MemberOutDto;
-import msa.member.v1.member.model.Member;
-import msa.member.v1.member.model.UserInfo;
 import msa.member.v1.member.service.MemberService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,10 +27,13 @@ public class MemberApi {
         MemberOutDto outDto = memberService.login(getDto);
         log.traceExit(outDto);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + outDto.getAccessToken());
-
-        return ResponseEntity.status(returnStatus).headers(headers).body(outDto.getUserInfo());
+        if(outDto.getAccessToken() != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + outDto.getAccessToken());
+            return ResponseEntity.status(returnStatus).headers(headers).body("로그인 성공!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패!");
+        }
     }
 
     @PostMapping("/signUp")

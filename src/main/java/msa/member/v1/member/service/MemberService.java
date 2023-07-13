@@ -27,16 +27,17 @@ public class MemberService {
 
     public MemberOutDto login(MemberGetDto getDto) {
         UserInfo userInfo = memberDao.login(getDto);
-
-        String accessToken = jwtTokenProvider.createAccessToken(userInfo.getCuid(), userInfo.getRoles());
-        String refreshToken = jwtTokenProvider.createRefreshToken(userInfo.getCuid(), userInfo);
-        // Redis에 refreshToken, UserInfo 저장
-        redisUtils.setData("refreshToken", refreshToken, refreshExpirationTime);
-        redisUtils.setUserInfo("userInfo", userInfo, refreshExpirationTime);
-
         MemberOutDto outDto = new MemberOutDto();
-        outDto.setUserInfo(userInfo);
-        outDto.setAccessToken(accessToken);
+
+        if(userInfo != null) {
+            String accessToken = jwtTokenProvider.createAccessToken(userInfo.getCuid(), userInfo.getRoles());
+            String refreshToken = jwtTokenProvider.createRefreshToken(userInfo.getCuid(), userInfo);
+            // Redis에 refreshToken, UserInfo 저장
+            redisUtils.setData("refreshToken", refreshToken, refreshExpirationTime);
+            redisUtils.setUserInfo("userInfo", userInfo, refreshExpirationTime);
+
+            outDto.setAccessToken(accessToken);
+        }
         return outDto;
     }
 
