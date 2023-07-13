@@ -32,7 +32,7 @@ public class MemberApi {
             headers.set("Authorization", "Bearer " + outDto.getAccessToken());
             return ResponseEntity.status(returnStatus).headers(headers).body("로그인 성공!");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("로그인 실패!");
         }
     }
 
