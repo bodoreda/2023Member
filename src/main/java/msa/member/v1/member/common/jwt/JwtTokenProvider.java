@@ -2,16 +2,12 @@ package msa.member.v1.member.common.jwt;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import msa.member.v1.member.common.redis.RedisUtils;
 import msa.member.v1.member.model.UserInfo;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * packageName : msa.member.v1.jwt

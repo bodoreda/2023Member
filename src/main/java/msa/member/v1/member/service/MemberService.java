@@ -10,7 +10,6 @@ import msa.member.v1.member.dto.MemberInDto;
 import msa.member.v1.member.dto.MemberOutDto;
 import msa.member.v1.member.model.UserInfo;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 
@@ -37,6 +36,9 @@ public class MemberService {
             redisUtils.setUserInfo("userInfo", userInfo, refreshExpirationTime);
 
             outDto.setAccessToken(accessToken);
+            
+            // 로그인 성공 직후 보여줄 회원정보이나 세션 및 쿠키에 저장되지는 않을 휘발성 데이터
+            outDto.setUserInfo(userInfo);
         }
         return outDto;
     }
